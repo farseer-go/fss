@@ -2,11 +2,18 @@ module github.com/farseer-go/fss
 
 go 1.19
 
-require github.com/farseer-go/fs v0.0.0-20220827152506-4cbe175fcd51
+require (
+	github.com/farseer-go/collections v0.0.0-20220829132554-e9a10ac72916
+	github.com/farseer-go/fs v0.0.0-20220827152506-4cbe175fcd51
+	github.com/farseer-go/utils v0.0.0-20220819075058-6b323db48d20
+)
 
 require (
+	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/devfeel/mapper v0.7.10 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/klauspost/compress v1.15.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
@@ -18,9 +25,11 @@ require (
 	github.com/spf13/viper v1.12.0 // indirect
 	github.com/studyzy/iocgo v0.0.0-20220102165609-54d474ad4d2a // indirect
 	github.com/subosito/gotenv v1.3.0 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
+	github.com/valyala/fasthttp v1.38.0 // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/ini.v1 v1.66.4 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

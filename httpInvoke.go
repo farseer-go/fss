@@ -1,8 +1,11 @@
 package fss
 
 import (
+	"github.com/farseer-go/collections"
+	"github.com/farseer-go/fs/core"
 	"github.com/farseer-go/fs/core/eumLogLevel"
 	"github.com/farseer-go/fss/eumTaskType"
+	"github.com/farseer-go/utils/http"
 	"time"
 )
 
@@ -23,6 +26,23 @@ type LogRequest struct {
 	CreateAt time.Time
 }
 
-func httpInvoke(request invokeRequest) {
+var httpHead map[string]any
 
+// 从fss服务端拉取任务
+func httpPull() collections.List[taskVO] {
+	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/pull"
+	postData := map[string]any{"TaskCount": getPullCountConfig()}
+
+	var rsp = http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
+	if !rsp.Status {
+		return collections.NewList[taskVO]()
+	}
+	return rsp.Data
+}
+
+// 向fss服务端提交任务报告
+func httpInvoke(request invokeRequest) bool {
+	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/JobInvoke"
+	var rsp = http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
+	return rsp.Status
 }
