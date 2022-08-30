@@ -20,25 +20,22 @@ func (module Module) DependsModule() []modules.FarseerModule {
 func (module Module) PreInitialize() {
 	hostname, _ := os.Hostname()
 	snowflake.Init(parse.HashCode64(hostname), rand.Int63n(32))
+	client = clientVO{
+		ClientId:   snowflake.GenerateId(),
+		ClientIp:   fs.AppIp,
+		ClientName: hostname,
+		ClientJobs: collections.NewDictionary[string, jobFunc](),
+		taskQueue:  make(chan taskVO, getPullCountConfig()),
+	}
 }
 
 func (module Module) Initialize() {
 }
 
 func (module Module) PostInitialize() {
-	hostname, _ := os.Hostname()
-	client = clientVO{
-		Id:   snowflake.GenerateId(),
-		Ip:   fs.AppIp,
-		Name: hostname,
-		Jobs: collections.NewList[string](),
-	}
-	httpHead = map[string]any{
-		"ClientIp":   client.Ip,
-		"ClientId":   client.Id,
-		"ClientName": client.Name,
-		"ClientJobs": "",
-	}
+	// 后台拉取任务
+	go pullTask()
+	go workTask()
 }
 
 func (module Module) Shutdown() {

@@ -26,13 +26,11 @@ type LogRequest struct {
 	CreateAt time.Time
 }
 
-var httpHead map[string]any
-
 // 从fss服务端拉取任务
 func httpPull() collections.List[taskVO] {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/pull"
 	postData := map[string]any{"TaskCount": getPullCountConfig()}
-
+	httpHead := client.getHttpHead()
 	var rsp = http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
 	if !rsp.Status {
 		return collections.NewList[taskVO]()
@@ -43,6 +41,7 @@ func httpPull() collections.List[taskVO] {
 // 向fss服务端提交任务报告
 func httpInvoke(request invokeRequest) bool {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/JobInvoke"
+	httpHead := client.getHttpHead()
 	var rsp = http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
 	return rsp.Status
 }
