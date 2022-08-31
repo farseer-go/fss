@@ -4,8 +4,9 @@ go 1.19
 
 require (
 	github.com/farseer-go/collections v0.0.0-20220829132554-e9a10ac72916
-	github.com/farseer-go/fs v0.0.0-20220827152506-4cbe175fcd51
-	github.com/farseer-go/utils v0.0.0-20220819075058-6b323db48d20
+	github.com/farseer-go/fs v0.0.0-20220831080021-90676b9fd187
+	github.com/farseer-go/tasks v0.0.0-20220831082810-7af977206ad0
+	github.com/farseer-go/utils v0.0.0-20220830165904-75e22e837876
 )
 
 require (

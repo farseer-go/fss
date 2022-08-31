@@ -22,11 +22,11 @@ func (e Enum) String() string {
 	case Scheduler:
 		return "Scheduler"
 	case Working:
-		return "Working"
+		return "WorkCount"
 	case Fail:
-		return "Fail"
+		return "fail"
 	case Success:
-		return "Success"
+		return "success"
 	}
 	return "None"
 }

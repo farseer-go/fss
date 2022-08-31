@@ -1,6 +1,6 @@
 package fss
 
-type jobFunc func(context IFssContext)
+type jobFunc func(context IFssContext) bool
 
 // RegisterJob 注册JOB
 func RegisterJob(jobName string, jobFn jobFunc) {

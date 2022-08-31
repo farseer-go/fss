@@ -21,11 +21,11 @@ func (module Module) PreInitialize() {
 	hostname, _ := os.Hostname()
 	snowflake.Init(parse.HashCode64(hostname), rand.Int63n(32))
 	client = clientVO{
-		ClientId:   snowflake.GenerateId(),
-		ClientIp:   fs.AppIp,
-		ClientName: hostname,
-		ClientJobs: collections.NewDictionary[string, jobFunc](),
-		taskQueue:  make(chan taskVO, getPullCountConfig()),
+		ClientId:        snowflake.GenerateId(),
+		ClientIp:        fs.AppIp,
+		ClientName:      hostname,
+		ClientJobs:      collections.NewDictionary[string, jobFunc](),
+		WorkFinishEvent: make(chan int, 100),
 	}
 }
 
@@ -34,8 +34,7 @@ func (module Module) Initialize() {
 
 func (module Module) PostInitialize() {
 	// 后台拉取任务
-	go pullTask()
-	go workTask()
+	go timingPullTask()
 }
 
 func (module Module) Shutdown() {

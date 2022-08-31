@@ -27,9 +27,9 @@ type LogRequest struct {
 }
 
 // 从fss服务端拉取任务
-func httpPull() collections.List[taskVO] {
+func httpPull(taskCount int) collections.List[taskVO] {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/pull"
-	postData := map[string]any{"TaskCount": getPullCountConfig()}
+	postData := map[string]any{"TaskCount": taskCount}
 	httpHead := client.getHttpHead()
 	var rsp = http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
 	if !rsp.Status {

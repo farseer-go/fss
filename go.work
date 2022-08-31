@@ -8,4 +8,5 @@ replace (
     github.com/farseer-go/collections => ../collections
     github.com/farseer-go/mapper => ../mapper
     github.com/farseer-go/utils => ../utils
+    github.com/farseer-go/tasks => ../tasks
 )
