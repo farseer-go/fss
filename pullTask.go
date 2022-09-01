@@ -3,6 +3,7 @@ package fss
 import (
 	"context"
 	"fmt"
+	"github.com/farseer-go/fs/exception"
 	"github.com/farseer-go/fs/flog"
 	"github.com/farseer-go/fs/stopwatch"
 	"github.com/farseer-go/tasks"
@@ -71,8 +72,17 @@ func executeTask(task taskVO) {
 	// 定时激活任务
 	tasks.RunNow("fss.activateTask", 3*time.Second, func(context *tasks.TaskContext) { receiveContext.activateTask() }, ctx)
 	sw.Start()
+	var result bool
+
 	// 执行任务
-	result := fssJob(&receiveContext)
+	try := exception.Try(func() {
+		result = fssJob(&receiveContext)
+	})
+	try.CatchException(func(exp any) {
+		flog.Errorf("taskGroupId=%d,caption=%s：%s", receiveContext.task.TaskGroupId, receiveContext.task.Caption, exp)
+		receiveContext.fail(exp.(string))
+	})
+
 	cancelFunc()
 	if result {
 		receiveContext.success()
