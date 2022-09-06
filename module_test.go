@@ -9,5 +9,5 @@ import (
 
 func TestModule_PreInitialize(t *testing.T) {
 	fs.Initialize[Module]("fss test")
-	assert.Equal(t, 4, strings.Count(client.ClientIp, "."))
+	assert.Equal(t, 3, strings.Count(client.ClientIp, "."))
 }

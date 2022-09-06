@@ -4,9 +4,7 @@ import (
 	"github.com/farseer-go/collections"
 	"github.com/farseer-go/fs"
 	"github.com/farseer-go/fs/modules"
-	"github.com/farseer-go/fs/parse"
-	"github.com/farseer-go/utils/snowflake"
-	"math/rand"
+	"github.com/farseer-go/fs/snowflake"
 	"os"
 )
 
@@ -19,7 +17,6 @@ func (module Module) DependsModule() []modules.FarseerModule {
 
 func (module Module) PreInitialize() {
 	hostname, _ := os.Hostname()
-	snowflake.Init(parse.HashCode64(hostname), rand.Int63n(32))
 	client = clientVO{
 		ClientId:        snowflake.GenerateId(),
 		ClientIp:        fs.AppIp,
