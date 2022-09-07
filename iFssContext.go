@@ -1,6 +1,7 @@
 package fss
 
 import (
+	"github.com/farseer-go/collections"
 	"github.com/farseer-go/fs/core/eumLogLevel"
 	"github.com/farseer-go/fs/flog"
 	"github.com/farseer-go/fs/stopwatch"
@@ -32,8 +33,8 @@ func newContext(sw *stopwatch.Watch, task taskVO) fssContext {
 		task:       task,
 		taskStatus: eumTaskType.Working,
 	}
-	if context.task.Data == nil {
-		context.task.Data = make(map[string]string)
+	if context.task.Data.IsNil() {
+		context.task.Data = collections.NewDictionary[string, string]()
 	}
 	return context
 }
@@ -128,10 +129,10 @@ func (r *fssContext) Logger(logLevel eumLogLevel.Enum, log string) {
 
 // GetData 获取数据
 func (r *fssContext) GetData(key string) string {
-	return r.task.Data[key]
+	return r.task.Data.GetValue(key)
 }
 
 // SetData 获取数据
 func (r *fssContext) SetData(key string, val string) {
-	r.task.Data[key] = val
+	r.task.Data.Add(key, val)
 }

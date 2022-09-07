@@ -4,19 +4,20 @@ import (
 	"github.com/farseer-go/collections"
 	"github.com/farseer-go/fs/core"
 	"github.com/farseer-go/fs/core/eumLogLevel"
+	"github.com/farseer-go/fs/flog"
 	"github.com/farseer-go/fss/eumTaskType"
 	"github.com/farseer-go/utils/http"
 	"time"
 )
 
 type invokeRequest struct {
-	TaskGroupId  int               // 任务组ID
-	NextTimespan int64             // 下次执行时间
-	Progress     int               // 当前进度
-	Status       eumTaskType.Enum  // 执行状态
-	RunSpeed     int64             // 执行速度
-	Log          LogRequest        // 日志
-	Data         map[string]string // 数据
+	TaskGroupId  int                                    // 任务组ID
+	NextTimespan int64                                  // 下次执行时间
+	Progress     int                                    // 当前进度
+	Status       eumTaskType.Enum                       // 执行状态
+	RunSpeed     int64                                  // 执行速度
+	Log          LogRequest                             // 日志
+	Data         collections.Dictionary[string, string] // 数据
 }
 
 // LogRequest 日志
@@ -31,8 +32,13 @@ func httpPull(taskCount int) collections.List[taskVO] {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/pull"
 	postData := map[string]any{"TaskCount": taskCount}
 	httpHead := client.getHttpHead()
-	var rsp = http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
+	rsp, err := http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
+	if err != nil {
+		flog.Error(err.Error())
+		return collections.NewList[taskVO]()
+	}
 	if !rsp.Status {
+		flog.Warning(rsp.StatusMessage)
 		return collections.NewList[taskVO]()
 	}
 	return rsp.Data
@@ -42,6 +48,13 @@ func httpPull(taskCount int) collections.List[taskVO] {
 func httpInvoke(request invokeRequest) bool {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/JobInvoke"
 	httpHead := client.getHttpHead()
-	var rsp = http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
+	rsp, err := http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
+	if err != nil {
+		flog.Error(err.Error())
+		return false
+	}
+	if !rsp.Status {
+		flog.Warning(rsp.StatusMessage)
+	}
 	return rsp.Status
 }
