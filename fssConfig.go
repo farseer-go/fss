@@ -1,6 +1,9 @@
 package fss
 
-import "github.com/farseer-go/fs/configure"
+import (
+	"github.com/farseer-go/fs/configure"
+	"runtime"
+)
 
 type fssConfig struct {
 	Server    string // fss服务端地址
@@ -15,7 +18,11 @@ func getWorkCountConfig() int {
 
 // 客户端每次拉取数量
 func getPullCountConfig() int {
-	return configure.GetInt("FSS.PullCount")
+	pullCount := configure.GetInt("FSS.PullCount")
+	if pullCount == 0 {
+		pullCount = runtime.NumCPU()
+	}
+	return pullCount
 }
 
 // fss服务端地址

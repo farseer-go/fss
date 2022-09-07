@@ -34,7 +34,6 @@ func httpPull(taskCount int) collections.List[taskVO] {
 	httpHead := client.getHttpHead()
 	rsp, err := http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
 	if err != nil {
-		flog.Error(err.Error())
 		return collections.NewList[taskVO]()
 	}
 	if !rsp.Status {
@@ -50,7 +49,6 @@ func httpInvoke(request invokeRequest) bool {
 	httpHead := client.getHttpHead()
 	rsp, err := http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
 	if err != nil {
-		flog.Error(err.Error())
 		return false
 	}
 	if !rsp.Status {
