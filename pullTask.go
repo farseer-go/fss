@@ -33,7 +33,9 @@ func pullTask() {
 		lstTask := httpPull(pullCount)
 		// 拉取到任务后，将任务发到chan队列中
 		for _, task := range lstTask.ToArray() {
-			go executeTask(task)
+			if task.TaskGroupId > 0 {
+				go executeTask(task)
+			}
 		}
 	}
 }
@@ -76,7 +78,9 @@ func executeTask(task taskVO) {
 
 	// 执行任务
 	try := exception.Try(func() {
+		sw := stopwatch.StartNew()
 		result = fssJob(&receiveContext)
+		flog.AppInfof("fss", "%s，耗时：%s", task.JobName, sw.GetMillisecondsText())
 	})
 	try.CatchException(func(exp any) {
 		flog.Errorf("taskGroupId=%d,caption=%s：%s", receiveContext.task.TaskGroupId, receiveContext.task.Caption, exp)
