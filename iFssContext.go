@@ -16,6 +16,12 @@ type IFssContext interface {
 	SetNextAt(d time.Duration)
 	// Logger 写入到FSS平台的日志
 	Logger(logLevel eumLogLevel.Enum, log string)
+	// GetData 获取数据
+	GetData(key string) string
+	// SetData 获取数据
+	SetData(key string, val string)
+	// GetTask 获取任务数据
+	GetTask() taskVO
 }
 
 type fssContext struct {
@@ -135,4 +141,9 @@ func (r *fssContext) GetData(key string) string {
 // SetData 获取数据
 func (r *fssContext) SetData(key string, val string) {
 	r.task.Data.Add(key, val)
+}
+
+// GetTask 获取任务数据
+func (r *fssContext) GetTask() taskVO {
+	return r.task
 }
