@@ -1,5 +1,7 @@
 package fss
 
+import "github.com/farseer-go/fs/flog"
+
 type jobFunc func(context IFssContext) bool
 
 // RegisterJob 注册JOB
@@ -11,4 +13,6 @@ func RegisterJob(jobName string, jobFn jobFunc) {
 		panic("jobName：" + jobName + "，已存在")
 	}
 	client.ClientJobs.Add(jobName, jobFn)
+
+	flog.AppInfof("fss", "注册任务：%s", jobName)
 }
