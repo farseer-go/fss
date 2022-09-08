@@ -13,7 +13,11 @@ type fssConfig struct {
 
 // 允许最大并行执行的任务数量
 func getWorkCountConfig() int {
-	return configure.GetInt("FSS.WorkCount")
+	workCount := configure.GetInt("FSS.WorkCount")
+	if workCount == 0 {
+		workCount = runtime.NumCPU()
+	}
+	return workCount
 }
 
 // 客户端每次拉取数量
