@@ -36,7 +36,7 @@ func httpPull(taskCount int) collections.List[taskVO] {
 	httpHead := client.getHttpHead()
 	rsp, err := http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
 	defer func() {
-		flog.AppInfof("httpPull", "本次拉取任务条，耗时：%s", url, sw.GetMillisecondsText())
+		flog.AppInfof("httpPull", "本次拉取任务%d条，耗时：%s", rsp.Data.Count(), sw.GetMillisecondsText())
 	}()
 	if err != nil {
 		return collections.NewList[taskVO]()

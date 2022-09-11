@@ -18,8 +18,8 @@ func timingPullTask() {
 	client.WorkFinishEvent <- 0
 	for {
 		select {
-		case <-client.WorkFinishEvent:
-			pullTask()
+		//case <-client.WorkFinishEvent:
+		//	pullTask()
 		case <-time.After(2 * time.Second):
 			pullTask()
 		}
