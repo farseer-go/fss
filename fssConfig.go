@@ -33,3 +33,12 @@ func getPullCountConfig() int {
 func getServerConfig() []string {
 	return configure.GetStrings("FSS.Server")
 }
+
+// 客户端每次拉取的时间间隔（ms）
+func getPullIntervalConfig() int {
+	pullCount := configure.GetInt("FSS.PullInterval")
+	if pullCount == 0 {
+		pullCount = 2000
+	}
+	return pullCount
+}
