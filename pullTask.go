@@ -80,7 +80,7 @@ func executeTask(task taskVO) {
 	try := exception.Try(func() {
 		sw := stopwatch.StartNew()
 		result = fssJob(&receiveContext)
-		flog.AppInfof("fss", "%s，耗时：%s", task.JobName, sw.GetMillisecondsText())
+		flog.ComponentInfof("fss", "%s，耗时：%s", task.JobName, sw.GetMillisecondsText())
 	})
 	try.CatchException(func(exp any) {
 		flog.Errorf("taskGroupId=%d,caption=%s：%s", receiveContext.task.TaskGroupId, receiveContext.task.Caption, exp)

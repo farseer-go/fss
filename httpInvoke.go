@@ -36,7 +36,7 @@ func httpPull(taskCount int) collections.List[taskVO] {
 	httpHead := client.getHttpHead()
 	rsp, err := http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
 	defer func() {
-		flog.AppInfof("httpPull", "本次拉取任务%d条，耗时：%s", rsp.Data.Count(), sw.GetMillisecondsText())
+		flog.ComponentInfof("fss", "本次拉取任务%d条，耗时：%s", rsp.Data.Count(), sw.GetMillisecondsText())
 	}()
 	if err != nil {
 		return collections.NewList[taskVO]()
@@ -51,10 +51,6 @@ func httpPull(taskCount int) collections.List[taskVO] {
 // 向fss服务端提交任务报告
 func httpInvoke(request invokeRequest) bool {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/jobinvoke"
-	sw := stopwatch.StartNew()
-	defer func() {
-		flog.AppInfof("httpInvoke", "url：%s，耗时：%s", url, sw.GetMillisecondsText())
-	}()
 	httpHead := client.getHttpHead()
 	rsp, err := http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
 	if err != nil {

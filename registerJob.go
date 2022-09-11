@@ -14,5 +14,5 @@ func RegisterJob(jobName string, jobFn jobFunc) {
 	}
 	client.ClientJobs.Add(jobName, jobFn)
 
-	flog.AppInfof("fss", "注册任务：%s", jobName)
+	flog.ComponentInfof("fss", "注册任务：%s", jobName)
 }
