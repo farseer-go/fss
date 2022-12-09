@@ -34,15 +34,14 @@ func httpPull(taskCount int) collections.List[taskVO] {
 	sw := stopwatch.StartNew()
 	postData := map[string]any{"TaskCount": taskCount}
 	httpHead := client.getHttpHead()
-	rsp, err := http.PostJson[core.ApiResponse[collections.List[taskVO]]](url, httpHead, postData, 500)
+
+	var rsp core.ApiResponse[collections.List[taskVO]]
+	http.NewClient(url).Head(httpHead).Body(postData).PostUnmarshal(&rsp)
 	defer func() {
 		flog.ComponentInfof("fss", "本次拉取任务%d条，耗时：%s", rsp.Data.Count(), sw.GetMillisecondsText())
 	}()
-	if err != nil {
-		return collections.NewList[taskVO]()
-	}
 	if !rsp.Status {
-		flog.Warning(rsp.StatusMessage)
+		flog.Warning("%s request Warning:%s", url, rsp.StatusMessage)
 		return collections.NewList[taskVO]()
 	}
 	return rsp.Data
@@ -52,10 +51,9 @@ func httpPull(taskCount int) collections.List[taskVO] {
 func httpInvoke(request invokeRequest) bool {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/jobinvoke"
 	httpHead := client.getHttpHead()
-	rsp, err := http.PostJson[core.ApiResponseString](url, httpHead, request, 500)
-	if err != nil {
-		return false
-	}
+	var rsp core.ApiResponseString
+	http.NewClient(url).Head(httpHead).Body(request).PostUnmarshal(&rsp)
+
 	if !rsp.Status {
 		flog.Warning("%s request Warning:%s", url, rsp.StatusMessage)
 	}
