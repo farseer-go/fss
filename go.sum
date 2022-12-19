@@ -61,8 +61,8 @@ github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/farseer-go/collections v0.2.0 h1:wOsZpqhnH+iZ92I1oae0rFRHsfoB+ZZJ7eCJeg+pk0s=
 github.com/farseer-go/collections v0.2.0/go.mod h1:uBAPehNOKnhqu7OQAZHv4hj7Lcz4D4JzMbDAppiCbMM=
-github.com/farseer-go/fs v0.3.0 h1:IRMYrNCybsD76r9Wo0NGO1eAhkJp287ed6pQM2qMfBE=
-github.com/farseer-go/fs v0.3.0/go.mod h1:mg9BZsc2+UIICdjohXH6Ne5rpIZgwqDBetLlpGAnID4=
+github.com/farseer-go/fs v0.4.0 h1:IRMYrNCybsD76r9Wo0NGO1eAhkJp287ed6pQM2qMfBE=
+github.com/farseer-go/fs v0.4.0/go.mod h1:mg9BZsc2+UIICdjohXH6Ne5rpIZgwqDBetLlpGAnID4=
 github.com/farseer-go/tasks v0.1.0 h1:EMc0139Tdqm5mS0mmSMTZ1WzeTjafXHi5g7hhUEg2io=
 github.com/farseer-go/tasks v0.1.0/go.mod h1:GWbZb/UOxQykEp0gqiVHCGM5wlUqImOvGJlz7DbLjbs=
 github.com/farseer-go/utils v0.2.0 h1:e/wr7/75Qo6g+CmokyxpYxniuzfudqmwcRGD2/MvkBc=
