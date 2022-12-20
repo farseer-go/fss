@@ -2,7 +2,7 @@ package fss
 
 import "github.com/farseer-go/collections"
 
-var client clientVO
+var defaultClient clientVO
 
 type clientVO struct {
 	ClientId        int64                                   // 客户端ID
@@ -17,9 +17,13 @@ type clientVO struct {
 // 转换成http head
 func (receiver clientVO) getHttpHead() map[string]any {
 	return map[string]any{
-		"ClientIp":   client.ClientIp,
-		"ClientId":   client.ClientId,
-		"ClientName": client.ClientName,
-		"ClientJobs": client.ClientJobs.Keys().ToString(","),
+		"ClientIp":   defaultClient.ClientIp,
+		"ClientId":   defaultClient.ClientId,
+		"ClientName": defaultClient.ClientName,
+		"ClientJobs": defaultClient.ClientJobs.Keys().ToString(","),
 	}
+}
+
+func GetClient() clientVO {
+	return defaultClient
 }

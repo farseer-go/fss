@@ -33,7 +33,7 @@ func httpPull(taskCount int) collections.List[taskVO] {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/pull"
 	sw := stopwatch.StartNew()
 	postData := map[string]any{"TaskCount": taskCount}
-	httpHead := client.getHttpHead()
+	httpHead := defaultClient.getHttpHead()
 
 	var rsp core.ApiResponse[collections.List[taskVO]]
 	http.NewClient(url).Head(httpHead).Body(postData).PostUnmarshal(&rsp)
@@ -50,7 +50,7 @@ func httpPull(taskCount int) collections.List[taskVO] {
 // 向fss服务端提交任务报告
 func httpInvoke(request invokeRequest) bool {
 	url := http.AddHttpPrefix(collections.NewList(getServerConfig()...).Rand()) + "/task/jobinvoke"
-	httpHead := client.getHttpHead()
+	httpHead := defaultClient.getHttpHead()
 	var rsp core.ApiResponseString
 	http.NewClient(url).Head(httpHead).Body(request).PostUnmarshal(&rsp)
 

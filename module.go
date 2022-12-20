@@ -17,7 +17,7 @@ func (module Module) DependsModule() []modules.FarseerModule {
 
 func (module Module) PreInitialize() {
 	hostname, _ := os.Hostname()
-	client = clientVO{
+	defaultClient = clientVO{
 		ClientId:        snowflake.GenerateId(),
 		ClientIp:        fs.AppIp,
 		ClientName:      hostname,

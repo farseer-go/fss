@@ -18,16 +18,16 @@ func executeTask(task taskVO) {
 	sw := stopwatch.New()
 	receiveContext := newContext(sw, task)
 	// 如果拉回来的任务，本地不支持，则停止
-	if !client.ClientJobs.ContainsKey(task.JobName) {
+	if !defaultClient.ClientJobs.ContainsKey(task.JobName) {
 		message := fmt.Sprintf("未找到任务实现类：任务组：TaskGroupId=%d，Caption=%s，JobName=%s", task.TaskGroupId, task.Caption, task.JobName)
 		flog.Error(message)
 		receiveContext.fail(message)
 		return
 	}
 
-	client.WaitCount++
+	defaultClient.WaitCount++
 	// 任务执行客户端
-	fssJob := client.ClientJobs.GetValue(task.JobName)
+	fssJob := defaultClient.ClientJobs.GetValue(task.JobName)
 
 	// 计划时间还没到
 	waitTimeSpan := task.StartAt.Sub(time.Now())
@@ -39,10 +39,10 @@ func executeTask(task taskVO) {
 	}
 
 	// 等待任务减1，工作中+1
-	client.WaitCount--
-	client.WorkCount++
+	defaultClient.WaitCount--
+	defaultClient.WorkCount++
 	defer func() {
-		client.WorkCount--
+		defaultClient.WorkCount--
 	}()
 
 	// 定时激活任务
