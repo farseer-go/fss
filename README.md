@@ -1,9 +1,23 @@
 # fss 分布式调度中心客户端
 > 包：`"github.com/farseer-go/fss"`
-
+> 
 > 模块：`fss.Module`
 
-> [文档：https://farseer-go.github.io/doc/](https://farseer-go.github.io/doc/)
+- `Document`
+    - [English](https://farseer-go.gitee.io/en-us/)
+    - [中文](https://farseer-go.gitee.io/)
+    - [English](https://farseer-go.github.io/doc/en-us/)
+- Source
+    - [github](https://github.com/farseer-go/fs)
+
+![](https://img.shields.io/github/stars/farseer-go?style=social)
+![](https://img.shields.io/github/license/farseer-go/fss)
+![](https://img.shields.io/github/go-mod/go-version/farseer-go/fss)
+![](https://img.shields.io/github/v/release/farseer-go/fss)
+![Codecov](https://img.shields.io/codecov/c/github/farseer-go/fss)
+![](https://img.shields.io/github/languages/code-size/farseer-go/fss)
+![](https://img.shields.io/github/directory-file-count/farseer-go/fss)
+![](https://goreportcard.com/badge/github.com/farseer-go/fss)
 
 ## 概述
 FSS是一款跨语言分布式的调度中心
