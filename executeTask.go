@@ -20,7 +20,7 @@ func executeTask(task taskVO) {
 	// 如果拉回来的任务，本地不支持，则停止
 	if !defaultClient.ClientJobs.ContainsKey(task.JobName) {
 		message := fmt.Sprintf("未找到任务实现类：任务组：TaskGroupId=%d，Caption=%s，JobName=%s", task.TaskGroupId, task.Caption, task.JobName)
-		flog.Error(message)
+		_ = flog.Error(message)
 		receiveContext.fail(message)
 		return
 	}
