@@ -57,7 +57,7 @@ func executeTask(task taskVO) {
 		flog.ComponentInfof("fss", "%s，耗时：%s", task.JobName, sw.GetMillisecondsText())
 	})
 	try.CatchException(func(exp any) {
-		flog.Errorf("taskGroupId=%d,caption=%s：%s", receiveContext.task.TaskGroupId, receiveContext.task.Caption, exp)
+		_ = flog.Errorf("taskGroupId=%d,caption=%s：%s", receiveContext.task.TaskGroupId, receiveContext.task.Caption, exp)
 		receiveContext.fail(exp.(string))
 	})
 
